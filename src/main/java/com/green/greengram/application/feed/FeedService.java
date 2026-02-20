@@ -1,5 +1,7 @@
 package com.green.greengram.application.feed;
 
+import com.green.greengram.application.feed.model.FeedGetReq;
+import com.green.greengram.application.feed.model.FeedGetRes;
 import com.green.greengram.application.feed.model.FeedPostReq;
 import com.green.greengram.application.feed.model.FeedPostRes;
 import com.green.greengram.configuration.model.UserPrincipal;
@@ -31,5 +33,11 @@ public class FeedService {
         feedMapper.savePics(feedId, picSavedNames);
 
         return new FeedPostRes(feedId, picSavedNames);
+    }
+
+    public List<FeedGetRes> getFeedList(FeedGetReq req) {
+        List<FeedGetRes> list = feedMapper.findAll(req);
+        //작업!!
+        return list;
     }
 }
