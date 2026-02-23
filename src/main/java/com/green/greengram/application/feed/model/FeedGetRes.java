@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class FeedGetRes {
-    @JsonProperty("feedId") //JSON으로 변경경될 때 key값이 feedㅑㅇ
+    @JsonProperty("feedId") //JSON으로 변경될 때 key값이 feedId로 변경된다.
     private long id;
     private String contents;
     private String location;

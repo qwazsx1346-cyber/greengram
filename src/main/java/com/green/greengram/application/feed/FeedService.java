@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +38,11 @@ public class FeedService {
 
     public List<FeedGetRes> getFeedList(FeedGetReq req) {
         List<FeedGetRes> list = feedMapper.findAll(req);
-        //작업!!
+        //작업!!피드 당 사진 정보를 가져오는 작업을 해야한다.
+        for (FeedGetRes res : list) {
+            List<String> pics = feedMapper.findPicsById(res.getId());
+            res.setPics(pics);
+        }
         return list;
     }
 }
