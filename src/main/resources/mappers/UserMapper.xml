@@ -31,6 +31,7 @@
 
     <update id="updUser">
         UPDATE user
+        SET
         <choose>
                 <when test="upw != null">
                     upw = #{upw}
