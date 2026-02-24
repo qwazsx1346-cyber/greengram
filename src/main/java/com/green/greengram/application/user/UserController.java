@@ -8,6 +8,7 @@ import com.green.greengram.configuration.security.JwtTokenManager;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,5 +67,11 @@ public class UserController {
                                                 ,@RequestPart MultipartFile pic) {
         String savedFileName = userService.patchProfilePic(userPrincipal.getSignedUserId(), pic);
         return new ResultResponse<>("프로파일 유저 사진 수정", savedFileName);
+    }
+
+    @DeleteMapping("/profile/pic")
+    public ResultResponse<?> patchProfileUserPic(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.deleteProfilePic( userPrincipal.getSignedUserId() );
+        return new ResultResponse<>("프로파일 이미지 삭제 완료", null);
     }
 }
