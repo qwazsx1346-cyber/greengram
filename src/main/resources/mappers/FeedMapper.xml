@@ -17,9 +17,6 @@
         FROM feed f
         JOIN user u
         ON f.user_id = u.id
-        <if test="profileUserId != null and profileUserId > 0 ">
-            WHERE f.user_id = #{profileUserId}
-        </if>
         LEFT JOIN feed_like fl
         ON f.id = fl.feed_id
         AND fl.user_id = #{signedUserId}
@@ -35,6 +32,9 @@
         GROUP BY feed_id
         ) AS fcc
         ON fcc.feed_id = f.id
+        <if test="profileUserId != null and profileUserId > 0 ">
+            WHERE f.user_id = #{profileUserId}
+        </if>
         ORDER BY f.id DESC
         LIMIT #{startIdx}, #{size}
     </select>

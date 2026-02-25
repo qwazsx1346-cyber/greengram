@@ -25,13 +25,4 @@ public class FeedCommentController {
       long feedCommentId = feedCommentService.postFeedComment(req);
       return new ResultResponse<>("댓글 등록 성공", feedCommentId);
     }
-
-//    @GetMapping
-//    public ResultResponse<?> getFeedCommentList(@AuthenticationPrincipal UserPrincipal userPrincipal
-//                                              , @RequestBody FeedCommentGetReq req) {
-//      req.setFeedId( userPrincipal.getSignedUserId() );
-//      log.info("req: {}", req);
-//      FeedCommentGetRes res = feedCommentService.getFeedCommentList(req);
-//      return new ResultResponse<>("댓글 남기기", res);
-//    }
 }
