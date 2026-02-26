@@ -20,4 +20,10 @@
         LIMIT #{startIdx}, #{size}
     </select>
 
+    <delete id="deleteFeedComments">
+        DELETE FROM feed_comment
+        WHERE id = #{feedCommentId}
+        AND user_id = #{signedUserId}
+    </delete>
+
 </mapper>

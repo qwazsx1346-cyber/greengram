@@ -1,5 +1,6 @@
 package com.green.greengram.application.feedcomment;
 
+import com.green.greengram.application.feedcomment.model.FeedCommentDeleteReq;
 import com.green.greengram.application.feedcomment.model.FeedCommentGetReq;
 import com.green.greengram.application.feedcomment.model.FeedCommentGetRes;
 import com.green.greengram.application.feedcomment.model.FeedCommentPostReq;
@@ -33,5 +34,15 @@ public class FeedCommentController {
       log.info("req: {}", req);
       List<FeedCommentGetRes> list = feedCommentService.getFeedCommentList(req);
       return new ResultResponse<>(String.format("%d rows", list.size()), list);
+    }
+
+    @DeleteMapping
+    public ResultResponse<?> deleteFeedComment(@AuthenticationPrincipal UserPrincipal userPrincipal
+                                               ,@ModelAttribute FeedCommentDeleteReq req) { //ModelAttribute는 주는 데이터만 받음
+      req.setSignedUserId( userPrincipal.getSignedUserId() );
+
+      log.info("req: {}", req);
+      int result = feedCommentService.deleteFeedComment(req);
+      return new ResultResponse<>("댓글 삭제 완료",  result);
     }
 }
