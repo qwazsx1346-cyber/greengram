@@ -1,5 +1,6 @@
 package com.green.greengram.application.feed;
 
+import com.green.greengram.application.feed.model.FeedDeleteReq;
 import com.green.greengram.application.feed.model.FeedGetReq;
 import com.green.greengram.application.feed.model.FeedGetRes;
 import com.green.greengram.application.feed.model.FeedPostReq;
@@ -16,4 +17,6 @@ public interface FeedMapper {
     int savePics(@Param("feedId") long feedId
                 ,@Param("picSavedNames") List<String> picSavedNames); //여러개 보낼때에는 @Param애노테이션을 사용해줘야함. 구분을 못해서 얘는 이름이다 라는 표시를 위함.
     List<String> findPicsById(long feedId);
+    int delete(FeedDeleteReq req);
+    int deleteRef(FeedDeleteReq req);
 }
