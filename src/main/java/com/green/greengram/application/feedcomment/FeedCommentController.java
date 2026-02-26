@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +25,13 @@ public class FeedCommentController {
       req.setSignedUserId( userPrincipal.getSignedUserId() );
       log.info("req: {}", req);
       long feedCommentId = feedCommentService.postFeedComment(req);
-      return new ResultResponse<>("댓글 등록 성공", feedCommentId);
+      return new ResultResponse<>("댓글 등록 완료", feedCommentId);
+    }
+
+    @GetMapping
+    public ResultResponse<?> getFeedCommentList(@ModelAttribute FeedCommentGetReq req) {
+      log.info("req: {}", req);
+      List<FeedCommentGetRes> list = feedCommentService.getFeedCommentList(req);
+      return new ResultResponse<>(String.format("%d rows", list.size()), list);
     }
 }

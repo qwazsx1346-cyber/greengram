@@ -13,6 +13,7 @@ public class FeedCommentGetRes {
     private long feedId;
     private String comment;
     private long writerUserId;
+    @JsonProperty("writerNickName")
     private String writerNm;
     private String writerPic;
 }
