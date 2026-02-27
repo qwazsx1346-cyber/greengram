@@ -8,6 +8,7 @@ import com.green.greengram.configuration.util.MyFileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -21,8 +22,9 @@ public class FeedService {
     private final ImgUploadManager imgUploadManager;
     private final MyFileUtil myFileUtil;
 
+    @Transactional // 27번과 36번라인 둘 다 성공해야 작업됨. 하나라도 실패하면 DB에 등록이안됨
     public FeedPostRes postFeed(FeedPostReq req, List<MultipartFile> pics) {
-        feedMapper.save(req);
+        int saveAffectedRows = feedMapper.save(req);
 
         //save 이후에 방금 insert한 feed테이블의 id값이 필요해요.
         long feedId = req.getFeedId();
@@ -30,7 +32,14 @@ public class FeedService {
 
         //saveFeedPics메소드 호출하고 싶다!!!!!!
         List<String> picSavedNames = imgUploadManager.saveFeedPics(feedId, pics);
-        feedMapper.savePics(feedId, picSavedNames);
+        try{
+            feedMapper.savePics(feedId, picSavedNames);
+        } catch (Exception e) {
+            //에러가 발생하면 사진(파일)을 지운다.
+            String directoryPath = String.format("%s/feed/%d", myFileUtil.fileUploadPath, feedId);
+            myFileUtil.deleteDirectory(directoryPath);
+            throw e;
+        }
 
         return new FeedPostRes(feedId, picSavedNames);
     }
