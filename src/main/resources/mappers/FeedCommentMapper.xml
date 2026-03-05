@@ -10,7 +10,7 @@
 
     <select id="findAll">
         SELECT fc.id, fc.feed_id,
-        fc.`comment`, u.id AS writerUserId,
+        fc.`comment`, fc.created_at, u.id AS writerUserId,
         u.nm AS writerNm, u.pic AS writerPic
         FROM user u
         JOIN feed_comment fc

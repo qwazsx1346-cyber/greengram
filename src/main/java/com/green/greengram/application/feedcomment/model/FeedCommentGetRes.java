@@ -16,4 +16,5 @@ public class FeedCommentGetRes {
     @JsonProperty("writerNickName")
     private String writerNm;
     private String writerPic;
+    private String createdAt;
 }
